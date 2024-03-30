@@ -9,7 +9,7 @@ function MessageInput() {
     e.preventDefault();
     if (input.trim()) {
       try {
-        console.log(input)
+        console.log("inside handle submit",input)
         await sendMessage( input ); // Adapt the object structure based on your backend
         setInput(''); // Clear the input after sending the message
       } catch (error) {
