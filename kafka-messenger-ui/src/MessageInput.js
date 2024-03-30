@@ -1,6 +1,6 @@
 // src/MessageInput.js
 import React, { useState } from 'react';
-import { sendMessage } from './api'; // Import the service function
+import { sendMessage } from './PublishMessage'; // Import the service function
 
 function MessageInput() {
   const [input, setInput] = useState('');
@@ -9,7 +9,8 @@ function MessageInput() {
     e.preventDefault();
     if (input.trim()) {
       try {
-        await sendMessage({ content: input, sender: 'User' }); // Adapt the object structure based on your backend
+        console.log(input)
+        await sendMessage( input ); // Adapt the object structure based on your backend
         setInput(''); // Clear the input after sending the message
       } catch (error) {
         console.error("Failed to send message:", error);

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ChatWindow({ messages }) {
+function ChatWindow({ messages }) { 
   return (
     <div className="chat-window">
       {messages.map((message, index) => (
-        <p key={index}>{message}</p>
+        <p key={index}>{message.content}</p>
       ))}
     </div>
   );
