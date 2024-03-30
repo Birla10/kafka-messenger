@@ -2,6 +2,9 @@
 
 # dependencies
 /kafka-messenger-ui/node_modules
+/kafka-messenger-backend/target
+kafka-messenger-backend/.settings/
+
 /.pnp
 .pnp.js
 
@@ -22,8 +25,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Ignore entire frontend directory
-/kafka-messenger-ui/
-
-# Ignore entire backend directory
-/kafka-messenger-backend/
+**/.classpath
+**/.project
+**/.factorypath
