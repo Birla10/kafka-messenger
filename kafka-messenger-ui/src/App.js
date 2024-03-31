@@ -35,7 +35,7 @@ function App() {
       </header>
       <Routes>
         <Route
-          path="/login"
+          path="/"
           element={
             <>
               <Login onLogin={handleLogin} />
