@@ -1,10 +1,11 @@
-package com.kafka.demo.controller;
+package com.kafka.demo.service;
 
 import java.time.Duration;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.KafkaException;
+import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -32,10 +33,13 @@ public class KafkaConsumerService {
 		try {
 			Thread pollThread = new Thread(() -> {
 				while (true) {
-					ConsumerRecords<String, String> consumerRecords = consumer.poll(Duration.ofMillis(100));
+					
+					ConsumerRecords<String, String> consumerRecords = consumer.poll(Duration.ofMillis(10));
 					consumerRecords.forEach(record -> {
+						System.out.println(record.value());
 						template.convertAndSend("/topic/messages", record.value());
 					});
+					consumer.commitSync();
 				}
 			});
 			pollThread.start();

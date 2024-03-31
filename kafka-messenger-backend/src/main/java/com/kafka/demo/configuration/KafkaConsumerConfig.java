@@ -32,7 +32,7 @@ public class KafkaConsumerConfig {
 		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		
 		Consumer<String, String> consumer = new KafkaConsumer<>(properties);
-		consumer.subscribe(Collections.singletonList("messenger"));
+		consumer.subscribe(Collections.singletonList(topic));
 		return consumer;
 	}
 }
