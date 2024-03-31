@@ -12,7 +12,8 @@ function App() {
   const navigate = useNavigate();
 
   const handleMessageReceived = (message) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
+    console.log('WebSocket message received:', message);
+    setMessages((prevMessages) => [...prevMessages, { text: message, source: 'websocket' }]);
   };
 
   const handleLogin = (username) => {
@@ -22,8 +23,9 @@ function App() {
   };
 
   const sendMessage = (message) => {
-    // This function can be used to send messages if needed
-    setMessages((prevMessages) => [...prevMessages, message]);
+    // You should send the message to the server here as well
+    console.log('Updating messages state in App with:', message);
+    setMessages((prevMessages) => [...prevMessages, { text: message, source: 'input' }]);
   };
 
   return (
@@ -33,7 +35,7 @@ function App() {
       </header>
       <Routes>
         <Route
-          path="/"
+          path="/login"
           element={
             <>
               <Login onLogin={handleLogin} />

@@ -1,43 +1,45 @@
-import { useEffect } from 'react';
+// WebSocketManager.js
+import React, { useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client';
 
 const WebSocketManager = ({ onMessageReceived }) => {
+  const stompClient = useRef(null);
+  const isSubscribed = useRef(false);
+
   useEffect(() => {
-    let stompClient = null;
-
     const connectWebSocket = () => {
-      // Establish the WebSocket connection using SockJS and Stomp
+      if (stompClient.current?.connected && isSubscribed.current) {
+        // Already connected and subscribed
+        return;
+      }
+      
       const socket = new SockJS('http://localhost:9090/ws');
-      stompClient = Stomp.over(socket);
+      stompClient.current = Stomp.over(socket);
+      stompClient.current.debug = () => {};
 
-      stompClient.connect({}, () => {
+      stompClient.current.connect({}, () => {
         console.log('WebSocket Connected');
-        stompClient.subscribe('/topic/messages', (message) => {
-            const messageJson = {
-            destination: message.headers.destination,
-            contentType: message.headers['content-type'],
-            subscription: message.headers.subscription,
-            messageId: message.headers['message-id'],
-            contentLength: parseInt(message.headers['content-length'], 10),
-            content: message.body.trim()
-          };
-          // Call the callback function when a new message is received
-          onMessageReceived(messageJson);
-        });
+        if (!isSubscribed.current) {
+          stompClient.current.subscribe('/topic/messages', (message) => {
+            console.log("Message received from websocket");
+            onMessageReceived(message.body.trim());
+          });
+          isSubscribed.current = true;
+        }
       }, (error) => {
         console.error('Connection error: ', error);
+        isSubscribed.current = false;
+        // Reconnect with a delay
+        setTimeout(connectWebSocket, 5000);
       });
     };
 
     connectWebSocket();
 
+    // Return cleanup function
     return () => {
-      if (stompClient && stompClient.connected) {
-        stompClient.disconnect(() => {
-          console.log('WebSocket Disconnected');
-        }, {});
-      }
+      // No need to disconnect, as we want to keep the connection alive
     };
   }, [onMessageReceived]);
 
