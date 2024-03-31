@@ -5,15 +5,33 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    // Simulate authentication with backend (replace with actual API call)
-    if (username.trim() === 'user' && password.trim() === 'password') {
-      console.log(username)
-      onLogin(username);
-    } else {
-      setError('Invalid username or password');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:9090/api/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+
+      const data = await response.json();
+      // Assuming the response contains a JWT token
+      const { token } = data;
+
+      // Store the token in localStorage
+      localStorage.setItem('token', token);
+
+      // Call the onLogin callback with the token
+      onLogin(token);
+    } catch (error) {
+      setError(error.message);
     }
-  };
+  }
 
   return (
     <div className="login-container">
