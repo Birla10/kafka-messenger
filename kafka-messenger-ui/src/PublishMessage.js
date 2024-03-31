@@ -1,7 +1,7 @@
 // sendMessage.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:9090/api/messages/produce';
+const API_URL = 'http://localhost:9090/api/produce';
 
 export const sendMessage = async (message) => {
   try {

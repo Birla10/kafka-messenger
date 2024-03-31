@@ -27,20 +27,23 @@ public class MessageController {
 		try {
 			ProducerRecord<String, String> record = new ProducerRecord<>("messenger", message);
 			producer.send(record);
+			System.out.println("Message sent successfully!");
 			return "Message sent successfully!";
 		} catch (Exception e) {
 			return "Error sending message: " + e.getMessage();
 		}
 	}
 	
-	@PostMapping("/login")
-	public String authenticateLogin(@RequestBody UserDetails userDetails) {
-		
-		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid.toString());
-		return uuid.toString();
-		
-	}
+	/*
+	 * @PostMapping("/login") public String authenticateLogin(@RequestBody
+	 * UserDetails userDetails) {
+	 * 
+	 * 
+	 * UUID uuid = UUID.randomUUID(); System.out.println(uuid.toString()); return
+	 * uuid.toString();
+	 * 
+	 * }
+	 */
 
    
 }
