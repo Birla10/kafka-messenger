@@ -1,0 +1,12 @@
+<users>
+  <user>
+    <username>user1</username>
+    <password>{bcrypt}encodedPasswordHere</password>
+    <roles>ROLE_USER</roles>
+  </user>
+  <user>
+    <username>user2</username>
+    <password>{bcrypt}encodedPasswordHere</password>
+    <roles>ROLE_USER</roles>
+  </user>
+</users>

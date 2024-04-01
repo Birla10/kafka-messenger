@@ -1,5 +1,6 @@
 package com.kafka.demo.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.kafka.demo.service.XmlFileUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	private XmlFileUserDetailsService xmlFileUserDetailsService;
+
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,8 +39,11 @@ public class SecurityConfig {
 
 	@Bean
 	public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(users())
-				.passwordEncoder(passwordEncoder()).and().build();
+	    return http.getSharedObject(AuthenticationManagerBuilder.class)
+	               .userDetailsService(xmlFileUserDetailsService)
+	               .passwordEncoder(passwordEncoder())
+	               .and()
+	               .build();
 	}
 
 	@Bean
