@@ -1,60 +1,67 @@
 /* src/App.css */
+:root {
+  --header-height: 60px; /* Adjust to match the actual header height including padding */
+  --sidebar-width: 300px; /* Adjust to match the chat list's actual width */
+}
 
 .App {
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f3f3f3;  
+  align-items: stretch;
+  min-height: 50vh;
+  max-height: 100vh;
+  background-color: #f3f3f3;
+  overflow: hidden;
+  
 }
 
 .App-header {
   background-color: #a631b0;
   color: white;
-  padding: 20px;
   width: 100%;
+  font-size: 20px;
 }
 
 .chat-window {
   width: 100%;
-  max-width: 500px;
+  max-width: 80%;
   background: white;
   margin: 20px;
   padding: 20px;
   border-radius: 8px;
   overflow-y: auto;
-  height: 400px; /* Adjust the height as needed */
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column; /* Stack messages from top to bottom */
   justify-content: flex-start; /* Start aligning items from the top */
   align-items: flex-start;
-}
-
-.chat-window p {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 20px;
-  width: fit-content;
-  max-width: 80%;
+  overflow-y: auto; /* Scrollable content */
+  height: 65vh; /* Height minus header height */
+  
 }
 
 form {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 500px;
+
+  padding: 5px;
+  position: relative; 
+  bottom: 0;
+  width: 71%; /* Full width */
+  max-width: calc(100% - 300px); /* Full width minus chat list width */
+  background: #f3f3f3; /* Same as the app background for cohesion */
+  margin-left: 340px;
+  margin-top: -75px;
+  margin-right: 50px;
+
 }
 
 input[type="text"] {
-  flex: 1;
+
   padding: 10px;
-  margin: 10px;
   border-radius: 20px;
   border: 1px solid #ccc;
   outline: none;
+  width:75%;
 }
 
 input[type="password"] {
@@ -98,8 +105,56 @@ button:hover {
   border-radius: 20px;
   margin: 10px;
   background-color: #f0f0f0;
+  font-size: 12px;
 }
 
 .chat-window p:first-child {
   margin-top: auto;
+}
+
+.chat-container {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  height: calc(100vh - var(--header-height)); /* Subtract header height */
+}
+
+.chat-list {
+  width: var(--sidebar-width);
+  height: 80vh;
+  padding: 20px;
+  overflow-y: auto;
+  flex-shrink: 0; /* Prevents the sidebar from shrinking */
+  margin-left: -20px;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.chat-list ul {
+  list-style: none; 
+  width: 200px; 
+}
+/* Individual chat list item styling */
+.chat-list li {
+  padding: 10px;
+  cursor: pointer;
+  width:100%;
+  border-bottom: 2px solid #ececec; /* Subtle separator for list items */
+  background-color: white;
+  border-radius: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+  }
+
+  .chat-list,
+  .chat-window {
+    width: 100%;
+  }
 }

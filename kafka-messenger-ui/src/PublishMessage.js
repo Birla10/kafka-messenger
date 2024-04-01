@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:9090/api/produce';
 
 export const sendMessage = async (message) => {
   try {
-    const sender = localStorage.getItem('sender');
+    const sender = localStorage.getItem('user');
     await axios.post(API_URL, {
       headers: {
         'Content-Type': 'application/json',

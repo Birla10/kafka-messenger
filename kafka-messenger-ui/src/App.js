@@ -5,13 +5,12 @@ import ChatWindow from './ChatWindow';
 import MessageInput from './MessageInput';
 import WebSocketManager from './WebSocketManager';
 import Login from './Login';
-import ChatList from './ChatList'; // Import the new ChatList component
+ 
 import './App.css';
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem('user') || '');
   const [messages, setMessages] = useState([]);
-  const [activeChat, setActiveChat] = useState(null); // State to keep track of the active chat
   const navigate = useNavigate();
 
   // This function could be updated to handle a new message in the context of a chat with a specific user
@@ -32,16 +31,10 @@ function App() {
     setMessages((prevMessages) => [...prevMessages, { text: message, source: 'input' }]);
   };
 
-  // Function to handle selecting a user from the ChatList
-  const handleUserSelect = (username) => {
-    setActiveChat(username);
-    // Here you might want to load the chat history for the selected user
-  };
-
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Kafka Messenger</h1>
+        <h3>Kafka Messenger</h3>
       </header>
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
@@ -49,8 +42,7 @@ function App() {
           <Route path="/chatwindow" element={
             <>
               <WebSocketManager onMessageReceived={handleMessageReceived} />
-              <div className="chat-interface">
-                <ChatList onUserSelect={handleUserSelect} /> {/* Pass users when you have them */}
+              <div className="chat-interface">                
                 <div className="chat-window-container">
                   <ChatWindow messages={messages} />
                   <MessageInput onSendMessage={sendMessage} />
