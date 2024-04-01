@@ -12,8 +12,7 @@ const WebSocketManager = ({ onMessageReceived }) => {
       if (stompClient.current?.connected && isSubscribed.current) {
         // Already connected and subscribed
         return;
-      }
-      
+      }      
       const socket = new SockJS('http://localhost:9090/ws');
       stompClient.current = Stomp.over(socket);
       stompClient.current.debug = () => {};
@@ -21,7 +20,9 @@ const WebSocketManager = ({ onMessageReceived }) => {
       stompClient.current.connect({}, () => {
         console.log('WebSocket Connected');
         if (!isSubscribed.current) {
-          stompClient.current.subscribe('/topic/messages', (message) => {
+          const sender = localStorage.getItem('sender');
+          console.log("in websocket", sender);          
+          stompClient.current.subscribe(`/queue/messages`, (message) => {
             console.log("Message received from websocket");
             onMessageReceived(message.body.trim());
           });

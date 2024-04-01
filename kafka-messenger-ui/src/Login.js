@@ -18,16 +18,17 @@ const Login = ({ onLogin }) => {
       if (!response.ok) {
         throw new Error('Invalid username or password');
       }
-
+    
       const data = await response.json();
       // Assuming the response contains a JWT token
       const { token } = data;
 
       // Store the token in localStorage
+      localStorage.clear();
       localStorage.setItem('token', token);
 
       // Call the onLogin callback with the token
-      onLogin(token);
+      onLogin(token, username);
     } catch (error) {
       setError(error.message);
     }
