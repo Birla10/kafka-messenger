@@ -1,12 +1,13 @@
+<?xml-model href="users.xsd"?>
 <users>
   <user>
     <username>user1</username>
-    <password>{bcrypt}encodedPasswordHere</password>
-    <roles>ROLE_USER</roles>
+    <password>$2a$16$bXU2iD5s0yV2zWV7wMwz5.EywIH3o.gI.BKU3W5GPNJLY1Rc9WY1m</password>
+    <roles>USER</roles>
   </user>
   <user>
     <username>user2</username>
-    <password>{bcrypt}encodedPasswordHere</password>
-    <roles>ROLE_USER</roles>
+    <password>$2a$16$bXU2iD5s0yV2zWV7wMwz5.EywIH3o.gI.BKU3W5GPNJLY1Rc9WY1m</password>
+    <roles>USER</roles>
   </user>
 </users>

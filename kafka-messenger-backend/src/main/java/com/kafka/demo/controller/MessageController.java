@@ -1,5 +1,6 @@
 package com.kafka.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.kafka.clients.producer.Producer;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kafka.demo.pojo.JwtRequest;
 import com.kafka.demo.pojo.JwtResponse;
+import com.kafka.demo.repository.UserRepository;
 import com.kafka.demo.utils.JwtTokenUtil;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -35,6 +37,9 @@ public class MessageController {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@PostMapping("/produce")
 	public String produceMessage(@RequestBody String message) {
@@ -66,12 +71,14 @@ public class MessageController {
 	    return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
-	/*
-	 * @GetMapping("/getusers") public ResponseEntity<List<String>> getUsers()
-	 * throws Exception {
-	 * 
-	 * 
-	 * return ResponseEntity.ok(new JwtResponse(token)); }
-	 */
+	@GetMapping("/fetchusers")
+	public ResponseEntity<List<String>> getUsers() {
+		
+		List<String> users = new ArrayList<>();
+		users = userRepository.loadUsersFromXML();
+		
+		return ResponseEntity.ok(users);
+		
+	}
 
 }

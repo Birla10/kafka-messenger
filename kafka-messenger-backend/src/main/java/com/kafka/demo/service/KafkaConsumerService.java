@@ -50,7 +50,7 @@ public class KafkaConsumerService {
 						String jsonStr = jsonObject.getString("body");
 						ChatMessage message = mapper.readValue(jsonStr, ChatMessage.class);
 						System.out.println(message.getMessage());
-						template.convertAndSend("/queue/messages", message.getMessage());
+						template.convertAndSendToUser(message.getSender(),"/queue/messages", message.getMessage());
 						System.out.println("published to websocket "+ message.getSender());
 					} catch (JsonProcessingException e) {
 						System.out.println("Error consuming message: " + e.getMessage());
