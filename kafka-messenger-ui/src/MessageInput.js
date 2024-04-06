@@ -23,12 +23,13 @@ function MessageInput({ onSendMessage }) { // This prop is the local state updat
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} >
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         type="text"
         placeholder="Type a message..."
+        className="msg-input"
       />
       <button type="submit">Send</button>
     </form>

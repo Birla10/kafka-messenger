@@ -20,9 +20,9 @@ const WebSocketManager = ({ onMessageReceived }) => {
       stompClient.current.connect({}, () => {
         console.log('WebSocket Connected');
         if (!isSubscribed.current) {
-          const sender = localStorage.getItem('sender');
-          console.log("in websocket", sender);          
-          stompClient.current.subscribe(`/queue/messages`, (message) => {
+          const receiver = localStorage.getItem('user');
+          console.log("in websocket", receiver);          
+          stompClient.current.subscribe(`/user/${receiver}/queue/messages`, (message) => {
             console.log("Message received from websocket");
             onMessageReceived(message.body.trim());
           });
